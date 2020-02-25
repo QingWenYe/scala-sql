@@ -95,7 +95,7 @@ class RichConnection(val conn: Connection) {
 
     executeUpdateWithGenerateKey(stmt){ rs =>
       if(rs.next)
-        t = Some( implicitly[JdbcValueAccessor[T]].passOut(rs, 1) )
+        t = Option( implicitly[JdbcValueAccessor[T]].passOut(rs, 1) )
     }
 
     assert( t.isDefined, s"the sql doesn't return a generated key but expected" )
@@ -206,7 +206,7 @@ class RichConnection(val conn: Connection) {
     var result: Option[T] = None
 
     if(rs.next()) {
-      result = Some(implicitly[ResultSetMapper[T]].from(rs))
+      result = Option(implicitly[ResultSetMapper[T]].from(rs))
       if(rs.next())
         LOG.warn("expect 1 row but has more")
       else
