@@ -196,7 +196,7 @@ class RichConnection(val conn: Connection) {
     var index = -1
     while (index == -1 && rs.next()) {
       index += 1
-      result = Some(implicitly[ResultSetMapper[T]].from(rs))
+      result = Option(implicitly[ResultSetMapper[T]].from(rs))
     }
     if(rs.next)
       LOG.warn("expect 1 row but really more. SQL result: {}", rs.getRow - 1)
